@@ -70,5 +70,8 @@ python3 $B rate <run_id> 4 --note "결과는 맞는데 diff가 너무 큼"
 - brgr worktree에는 git에 추적되는 파일만 들어갑니다. 에이전트는 `node_modules` 같은 의존성을
   직접 설치해야 할 수 있고, 이게 시간·토큰에 섞입니다.
 - `review`/`explore` 채점은 키워드 포함 여부라서 말만 맞게 하면 점수가 나옵니다.
-- 토큰 집계는 하네스 로그 형식이 바뀌면 조용히 `none`이 됩니다.
+- 토큰 집계는 하네스 로그 형식이 바뀌면 조용히 `none`이 됩니다. 지금 실제 실행으로 확인한 건
+  OpenCode뿐이고, Claude Code / Codex / Command Code 추출기는 로그 형식만 보고 짠 상태입니다.
+- `out_tok`에는 reasoning 토큰이 포함됩니다. 답변 길이가 아닙니다.
+- `review`/`explore`/`ui` 경로는 코드만 있고 실제 과제로 돌려본 적이 없습니다.
 - 모델 응답은 비결정적입니다. 비교하려면 `--repeat`로 여러 번 돌리세요.

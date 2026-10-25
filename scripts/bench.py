@@ -18,7 +18,7 @@ import subprocess
 import sys
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -53,7 +53,7 @@ def git(args, cwd, check=True):
 
 
 def now_iso():
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
 def load_task(task_id):
@@ -109,7 +109,9 @@ def prepare_state(task, dest, with_hidden_tests=False):
     bugfix: base + visible tests. feature: base only (tests hidden until grading).
     review/explore/ui: base as-is.
     """
-    clone_at(task["repo"], task["base_commit"], dest)
+    # review/explore/ui inspect the tree that contains the commit itself
+    start = task["solution_commit"] if task["kind"] in ("review", "explore", "ui") else task["base_commit"]
+    clone_at(task["repo"], start, dest)
     if task["kind"] == "bugfix" or (with_hidden_tests and task["kind"] == "feature"):
         overlay_paths(dest, task["solution_commit"], task.get("test_paths", []))
     commit_all(dest, f"bench task state: {task['id']}")
@@ -345,6 +347,8 @@ def run_one(a, task, variant):
     run_dir = WORK / run_id
     src = prepare_state(task, run_dir / "src")
     prompt = task["prompts"][variant]
+    if task["kind"] == "review":
+        prompt += f"\n\nThe change to review is commit {task['solution_commit'][:12]} (`git show {task['solution_commit'][:12]}`)."
     if task["kind"] in ("review", "explore"):
         prompt += "\n\nDo not modify files. Answer in your final message."
     args = ["run", "--headless", "--harness", a.harness, "--capture-diff", "--capture-logs",

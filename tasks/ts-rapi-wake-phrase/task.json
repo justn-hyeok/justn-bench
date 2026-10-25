@@ -14,7 +14,7 @@
   "timeout_s": 600,
   "prompts": {
     "loose": "라피 호출어 인식이 너무 빡빡해. 자연스럽게 불러도 반응하게 고쳐줘.",
-    "strict": "Make the failing test tests/chat-invocation.test.ts pass. Add and export parseRapiInvocation(content: string): string | null in packages/contracts/src/chatops.ts: return null when the message does not start with the wake word '라피' or '라피야' (word must end at end-of-text, whitespace, or punctuation like ! ? , : . ~ including full-width forms); otherwise return the remaining request with leading punctuation/whitespace stripped and trimmed (empty string if nothing follows). Use it in apps/chat/src/orchestrator.ts instead of the hardcoded /^라피야!\\s*/ regex: ignore messages where it returns null, and reply '무엇을 도와드릴까요? 질문을 함께 보내주세요.' when it returns an empty string. Do not edit the test file. Done when 'npx tsc -b && npx tsx --test tests/chat-invocation.test.ts' passes."
+    "strict": "tests/chat-invocation.test.ts가 통과하게 해줘. packages/contracts/src/chatops.ts에 parseRapiInvocation(content: string): string | null을 추가하고 export해. 메시지가 호출어 '라피' 또는 '라피야'로 시작하지 않으면 null을 반환해(호출어 뒤는 문자열 끝, 공백, 또는 ! ? , : . ~ 같은 문장부호여야 하고 전각 문장부호도 포함). 시작하면 앞쪽 문장부호와 공백을 떼고 trim한 나머지 요청을 반환해(뒤에 아무것도 없으면 빈 문자열). apps/chat/src/orchestrator.ts에서 하드코딩된 /^라피야!\\s*/ 정규식 대신 이 함수를 써서, null이면 메시지를 무시하고 빈 문자열이면 '무엇을 도와드릴까요? 질문을 함께 보내주세요.'라고 답하게 해. 테스트 파일은 수정하지 마. 'npx tsc -b && npx tsx --test tests/chat-invocation.test.ts'가 통과하면 완료야."
   },
   "answer": {
     "must_mention": [],

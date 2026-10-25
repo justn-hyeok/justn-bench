@@ -37,7 +37,8 @@ tasks, harness/model, and interpret results. Never grade or record by hand.
 - ui: no auto grading; the user rates with `python3 $B rate <run_id> <score>`.
 
 Always write both prompts: `--loose` (one vague line, like a real hurried request)
-and `--strict` (files, constraints, done criteria, "do not edit tests"). Set
+and `--strict` (files, constraints, done criteria, "do not edit tests"), both in
+the same language so the loose/strict gap measures specificity only. Set
 `--setup-cmd` when fresh clones need deps (e.g. `npm ci --prefer-offline`) and a
 `--test-cmd` that builds what the tests import. bugfix/feature are gated: the
 command refuses a task unless tests fail at the task state and pass at the solution.
