@@ -1,0 +1,24 @@
+{
+  "id": "ts-rapi-wake-phrase",
+  "kind": "bugfix",
+  "lang": "ts",
+  "repo": "/Users/justn/dev/rapi-agent",
+  "base_commit": "d49fcbe97ce33577c8a4f1b21b2fe5bc38fdcd63",
+  "solution_commit": "9e20fa0c37b93619827c6a1facd358b3b6010ea6",
+  "subject": "fix(chat): accept natural Rapi wake phrases",
+  "test_cmd": "npx tsc -b && npx tsx --test tests/chat-invocation.test.ts",
+  "test_paths": [
+    "tests/chat-invocation.test.ts"
+  ],
+  "setup_cmd": "npm ci --prefer-offline --no-audit --no-fund --loglevel=error",
+  "timeout_s": 600,
+  "prompts": {
+    "loose": "라피 호출어 인식이 너무 빡빡해. 자연스럽게 불러도 반응하게 고쳐줘.",
+    "strict": "Make the failing test tests/chat-invocation.test.ts pass. Add and export parseRapiInvocation(content: string): string | null in packages/contracts/src/chatops.ts: return null when the message does not start with the wake word '라피' or '라피야' (word must end at end-of-text, whitespace, or punctuation like ! ? , : . ~ including full-width forms); otherwise return the remaining request with leading punctuation/whitespace stripped and trimmed (empty string if nothing follows). Use it in apps/chat/src/orchestrator.ts instead of the hardcoded /^라피야!\\s*/ regex: ignore messages where it returns null, and reply '무엇을 도와드릴까요? 질문을 함께 보내주세요.' when it returns an empty string. Do not edit the test file. Done when 'npx tsc -b && npx tsx --test tests/chat-invocation.test.ts' passes."
+  },
+  "answer": {
+    "must_mention": [],
+    "threshold": 1.0
+  },
+  "added": "2026-10-25T16:14:57+00:00"
+}
